@@ -1,5 +1,5 @@
 import pygame, sys
-import constants
+from constants import *
 from Nivel import Nivel
 
 pygame.init()
@@ -16,11 +16,11 @@ while play:
             play = False
 
     #DRAW
-    fase.draw()
+    fase.draw(screen)
 
     #UPDATE
     fase.update()
-    
+
     #RENDER
     pygame.display.flip()
     screen.fill(BLACK)

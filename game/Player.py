@@ -9,23 +9,23 @@ class Player(Block):
 
     def update(self):
         input = self.getInput()
-        move(input)
+        self.move(input)
 
     def getInput(self):
         pressed = pygame.key.get_pressed()
-        if pressed[K_LEFT]:
+        if pressed[pygame.K_LEFT]:
             return -1
-        elif pressed[K_RIGHT]:
+        elif pressed[pygame.K_RIGHT]:
             return 1
         return 0
 
     def move(self, input):
         if input == -1 and self.posX > 0:
             self.posX -= self.vel
-            self.rect.move_ip(self.posX - self.vel, self.posY)
+            self.rect.move_ip(-self.vel, 0)
         elif input == 1 and self.posX < SCREEN_TAM[0] - self.width:
             self.posX += self.vel
-            self.rect.move_ip(self.posX + self.vel, self.posY)
+            self.rect.move_ip(self.vel, 0)
 
     def getPos(self):
         return (self.posX, self.posY)

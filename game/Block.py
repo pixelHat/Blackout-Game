@@ -11,3 +11,6 @@ class Block():
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rect)
+
+    def update(self):
+        pass
