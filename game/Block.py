@@ -14,3 +14,6 @@ class Block():
 
     def update(self):
         pass
+
+    def getRect(self):
+        return self.rect

@@ -2,28 +2,47 @@ import pygame, sys
 from constants import *
 from Nivel import Nivel
 
-pygame.init()
-screen = pygame.display.set_mode(SCREEN_TAM)
-pygame.display.set_caption("Blackout")
-clock = pygame.time.Clock()
+class Main:
+    def __init__(self, width, height, name, fps):
+        self.width = width
+        self.height = height
+        self.name = name
+        self.fps = fps
+        self.play = True
 
-fase = Nivel()
+    def start(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        pygame.display.set_caption(self.name)
+        self.clock = pygame.time.Clock()
+        self.nivel = Nivel()
+        self.update()
 
-play = True
-while play:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            play = False
+    def update(self):
+        while self.play:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.play = False
 
-    #DRAW
-    fase.draw(screen)
+            if self.nivel.won():
+                self.play  = False
 
-    #UPDATE
-    fase.update()
+            #DRAW
+            self.nivel.draw(self.screen)
 
-    #RENDER
-    pygame.display.flip()
-    screen.fill(BLACK)
+            #UPDATE
+            self.nivel.update()
 
-    clock.tick(FPS)
-pygame.quit()
+            #RENDER
+            pygame.display.flip()
+            self.screen.fill(BLACK)
+
+            self.clock.tick(self.fps)
+        self.finalise()
+
+    def finalise(self):
+        pygame.quit()
+
+if __name__ == "__main__":
+    main = Main(800, 600, "Blackout", 60)
+    main.start()

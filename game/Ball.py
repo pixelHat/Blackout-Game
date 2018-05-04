@@ -20,17 +20,24 @@ class Ball:
     def move(self):
         if self.velX < 0 and self.posX > self.radius:
             self.posX += self.velX
+            self.rect.move_ip(self.velX, 0)
         elif self.velX > 0 and self.posX < SCREEN_TAM[0] - self.radius:
             self.posX += self.velX
+            self.rect.move_ip(self.velX, 0)
         else:
             self.velX = -self.velX
 
         if self.velY < 0 and self.posY > self.radius:
             self.posY += self.velY
+            self.rect.move_ip(0, self.velY)
         elif self.velY > 0 and self.posY < SCREEN_TAM[1] - self.radius:
             self.posY += self.velY
+            self.rect.move_ip(0, self.velY)
         else:
             self.velY = -self.velY
+
+    def collide(self):
+        self.velY = - self.velY
 
     def getRect(self):
         return self.rect
