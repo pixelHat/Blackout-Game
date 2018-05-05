@@ -6,18 +6,6 @@ from constants import WHITE, SCREEN_TAM
 
 class Nivel():
     def __init__(self):
-        #self.blocks = []
-        #row, col = 3, 5
-        #space = 5
-        #posX = (SCREEN_TAM[0] - col * (space + 100)) // 2
-        #for i in range(col):
-        #    blocksCol = []
-        #    for j in range(row):
-        #        block = Block(posX + i*105, j*30, 100, 25, WHITE)
-        #        blocksCol.append(block)
-        #    self.blocks.append(blocksCol)
-        #self.numBlocks = row*col
-
         self.player = Player(SCREEN_TAM[0] // 2, SCREEN_TAM[1] - 50, 10, 100, 25, WHITE)
         self.ball = Ball(SCREEN_TAM[0] // 2, 100, 5, -5, 10, WHITE)
         self.objects = [self.player, self.ball]
@@ -25,6 +13,7 @@ class Nivel():
 
     def createBlock(self):
         self.blocks = []
+        #lado esquerdo
         block = Block(300, 280, 40, 40, WHITE)
         self.blocks.append(block)
         block = Block(300, 240, 40, 40, WHITE)
@@ -36,6 +25,7 @@ class Nivel():
         block = Block(300, 120, 40, 40, WHITE)
         self.blocks.append(block)
 
+        #lado direito
         block = Block(460, 280, 40, 40, WHITE)
         self.blocks.append(block)
         block = Block(460, 240, 40, 40, WHITE)
@@ -47,6 +37,7 @@ class Nivel():
         block = Block(460, 120, 40, 40, WHITE)
         self.blocks.append(block)
 
+        #topo
         block = Block(420, 120, 40, 40, WHITE)
         self.blocks.append(block)
         block = Block(380, 120, 40, 40, WHITE)
@@ -54,19 +45,23 @@ class Nivel():
         block = Block(340, 120, 40, 40, WHITE)
         self.blocks.append(block)
 
+        # topo meio
         block = Block(380, 160, 40, 40, WHITE)
         self.blocks.append(block)
 
+        # esquerda interna
         block = Block(340, 200, 40, 40, WHITE)
         self.blocks.append(block)
         block = Block(340, 240, 40, 40, WHITE)
         self.blocks.append(block)
 
+        #direita interna
         block = Block(420, 200, 40, 40, WHITE)
         self.blocks.append(block)
         block = Block(420, 240, 40, 40, WHITE)
         self.blocks.append(block)
 
+        # braços
         block = Block(260, 200, 40, 40, WHITE)
         self.blocks.append(block)
         block = Block(500, 200, 40, 40, WHITE)
@@ -82,6 +77,9 @@ class Nivel():
                 block.draw(screen)
 
     def update(self):
+        """
+        move the objects and call the method collision
+        """
         for obj in self.objects:
             obj.update()
         self.collision()
