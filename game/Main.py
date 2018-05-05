@@ -1,6 +1,6 @@
 import pygame, sys
 from constants import *
-from Nivel import Nivel
+from Level import Level
 
 class Main:
     def __init__(self, width, height, name, fps):
@@ -15,7 +15,7 @@ class Main:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption(self.name)
         self.clock = pygame.time.Clock()
-        self.nivel = Nivel()
+        self.level = Level(blocks1, blocks3)
         self.update()
 
     def update(self):
@@ -24,14 +24,16 @@ class Main:
                 if event.type == pygame.QUIT:
                     self.play = False
 
-            if self.nivel.won():
+            if self.level.won():
                 self.play  = False
+            if not self.level.loser():
+                self.play = False
 
             #DRAW
-            self.nivel.draw(self.screen)
+            self.level.draw(self.screen)
 
             #UPDATE
-            self.nivel.update()
+            self.level.update()
 
             #RENDER
             pygame.display.flip()

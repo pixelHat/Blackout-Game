@@ -9,6 +9,7 @@ class Ball:
         self.velY = velY
         self.radius = radius
         self.color = color
+        self.Live = True
         self.rect = pygame.Rect(self.posX - self.radius, self.posY - self.radius, 2 * self.radius, 2 * self.radius)
 
     def draw(self, screen):
@@ -35,6 +36,12 @@ class Ball:
             self.rect.move_ip(0, self.velY)
         else:
             self.velY = -self.velY
+
+        if self.posY + self.radius >= SCREEN_TAM[1]:
+            self.Live = False
+
+    def isLive(self):
+        return self.Live
 
     def collide(self):
         self.velY = - self.velY
