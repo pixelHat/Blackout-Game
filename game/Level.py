@@ -2,7 +2,8 @@ import pygame
 from Block import Block
 from Player import Player
 from Ball import Ball
-from constants import WHITE, SCREEN_TAM
+from Text import Text
+from constants import WHITE, SCREEN_TAM, PAUSE, GAME, GAMEOVER, WIN
 
 class Level():
     def __init__(self, blocks1, blocks2=None):
@@ -11,6 +12,12 @@ class Level():
         self.objects = [self.player, self.ball]
         self.numBlocks = 0
         self.play = True
+
+        #TEXT
+        _text1 = Text("Continue", 30, (100, 100), WHITE)
+        _text2 = Text("Pause", 30, (100, 100 + _text1.getSizeHeight()), WHITE)
+        self.textPause = [_text1, _text2]
+
         self.blocksPattern1 = blocks1
 
         if blocks2 != None:
@@ -55,10 +62,27 @@ class Level():
         """
         move the objects and call the method collision
         """
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_p]:
+            return PAUSE
         for obj in self.objects:
             obj.update()
         self.collision()
-        self.play = self.ball.isLive()
+        if not self.ball.isLive():
+            return GAMEOVER
+        if self.won():
+            return WIN
+        return GAME
+
+    def pause(self, screen):
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_SPACE]:
+            return GAME
+
+        for text in self.textPause:
+            text.draw(screen)
+
+        return PAUSE
 
     def collision(self):
         """
