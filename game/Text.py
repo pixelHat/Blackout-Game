@@ -17,6 +17,3 @@ class Text:
 
     def getSizeHeight(self):
         return self.sizeHeight
-
-    def click(self, pos):
-        return self.rect.collidepoint(pos)

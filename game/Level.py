@@ -3,7 +3,8 @@ from Block import Block
 from Player import Player
 from Ball import Ball
 from Text import Text
-from constants import WHITE, SCREEN_TAM, PAUSE, GAME, GAMEOVER, WIN
+from Button import Button
+from constants import *
 
 class Level():
     def __init__(self, blocks1, blocks2=None):
@@ -14,17 +15,17 @@ class Level():
         self.play = True
 
         #TEXT
-        _text1 = Text("Continue", 30, (100, 100), WHITE)
-        _text2 = Text("Pause", 30, (100, 100 + _text1.getSizeHeight()), WHITE)
-        self.textPause = [_text1, _text2]
+        _text2 = Text("Pause", 30, (100, 100), WHITE)
+        _text1 = Button("Continue", 30, (100, 100 + _text2.getSizeHeight()), WHITE, GAME)
+        _text3 = Button("Sair", 30, (100, 100 + _text1.getSizeHeight() + _text2.getSizeHeight()), WHITE, QUIT)
+        self.textPause = [_text2]
+        self.ButtonPause = [_text1, _text3]
 
         self.blocksPattern1 = blocks1
-
         if blocks2 != None:
             self.blocksPattern2 = blocks2
         else:
             self.blocksPattern2 = blocks1
-
         self.createBlock()
 
     def createBlock(self):
@@ -75,18 +76,26 @@ class Level():
         return GAME
 
     def pause(self, screen):
+        """
+        screen the pause for the level
+        """
         mouse = pygame.mouse.get_pressed()
         if mouse[0]:
-            for text in self.textPause:
+            for text in self.ButtonPause:
                 click = text.click(pygame.mouse.get_pos())
                 if click:
-                    return GAME
+                    return text.getAction()
 
         for text in self.textPause:
+            text.draw(screen)
+        for text in self.ButtonPause:
             text.draw(screen)
 
         return PAUSE
 
+    def reset(self):
+        self.__init__(self.blocksPattern1, self.blocksPattern2)
+        
     def collision(self):
         """
         verify collission betwen the ball and player

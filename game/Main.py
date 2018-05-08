@@ -9,7 +9,7 @@ class Main:
         self.name = name
         self.fps = fps
         self.play = True
-        self.statu = "game"
+        self.status = "game"
 
     def start(self):
         pygame.init()
@@ -18,20 +18,32 @@ class Main:
         pygame.display.set_caption(self.name)
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont('Comic Sans MS', 30)
-        self.level = Level(blocks4, blocks3)
+        self.levels = []
+        for i in blocksList:
+            for j in blocksList:
+                self.levels.append(Level(i, j))
+        self.level = self.levels[0]
+        self.numLevel = 1
+        self.maxLevel = len(self.levels)
         self.update()
 
     def update(self):
         while self.play:
-            if self.statu == GAME:
-                #DRAW
+            if self.status == GAME:
                 self.level.draw(self.screen)
-
-                #UPDATE
-                self.statu = self.level.update()
-
-            elif self.statu == PAUSE:
-                self.statu = self.level.pause(self.screen)
+                self.status = self.level.update()
+            elif self.status == PAUSE:
+                self.status = self.level.pause(self.screen)
+            elif self.status == WIN and self.numLevel < self.maxLevel:
+                self.level = self.levels[self.numLevel]
+                self.numLevel += 1
+                self.status = GAME
+            elif self.status == GAMEOVER:
+                self.numLevel = 0
+                self.level.reset()
+                self.status = GAME
+            elif self.status == QUIT:
+                self.play = False
 
             #RENDER
             pygame.display.flip()

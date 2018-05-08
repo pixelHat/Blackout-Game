@@ -9,6 +9,7 @@ PAUSE = "pause"
 GAME = "game"
 GAMEOVER = "gameover"
 WIN = "win"
+QUIT = "quit"
 
 # block patterns
 blocks1 = [[0, 1, 1, 1, 1, 1, 0],
@@ -34,3 +35,5 @@ blocks4 = [[0, 0, 1, 1, 1, 0, 0],
            [0, 1, 0, 1, 0, 1, 0],
            [1, 1, 1, 0, 1, 1, 1],
            [0, 1, 0, 0, 0, 1, 0]]
+
+blocksList = [blocks1, blocks2, blocks3, blocks4]
