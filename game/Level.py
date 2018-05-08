@@ -75,9 +75,12 @@ class Level():
         return GAME
 
     def pause(self, screen):
-        pressed = pygame.key.get_pressed()
-        if pressed[pygame.K_SPACE]:
-            return GAME
+        mouse = pygame.mouse.get_pressed()
+        if mouse[0]:
+            for text in self.textPause:
+                click = text.click(pygame.mouse.get_pos())
+                if click:
+                    return GAME
 
         for text in self.textPause:
             text.draw(screen)
