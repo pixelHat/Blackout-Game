@@ -1,4 +1,6 @@
-import pygame
+#import pygame
+from pygame import key, mouse
+from pygame.locals import *
 from Block import Block
 from Player import Player
 from Ball import Ball
@@ -63,8 +65,8 @@ class Level():
         """
         move the objects and call the method collision
         """
-        pressed = pygame.key.get_pressed()
-        if pressed[pygame.K_p]:
+        pressed = key.get_pressed() #pygame.key.get_pressed()
+        if pressed[K_p]:#pygame.K_p]:
             return PAUSE
         for obj in self.objects:
             obj.update()
@@ -79,10 +81,10 @@ class Level():
         """
         screen the pause for the level
         """
-        mouse = pygame.mouse.get_pressed()
-        if mouse[0]:
+        _mouse = mouse.get_pressed()#pygame.mouse.get_pressed()
+        if _mouse[0]:
             for text in self.ButtonPause:
-                click = text.click(pygame.mouse.get_pos())
+                click = text.click(mouse.get_pos())#pygame.mouse.get_pos())
                 if click:
                     return text.getAction()
 
@@ -95,7 +97,7 @@ class Level():
 
     def reset(self):
         self.__init__(self.blocksPattern1, self.blocksPattern2)
-        
+
     def collision(self):
         """
         verify collission betwen the ball and player

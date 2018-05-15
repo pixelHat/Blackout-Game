@@ -1,6 +1,6 @@
 import pygame, sys
 from constants import *
-from Level import Level
+from LevelBehavior import LevelBehavior
 
 class Main:
     def __init__(self, width, height, name, fps):
@@ -9,7 +9,6 @@ class Main:
         self.name = name
         self.fps = fps
         self.play = True
-        self.status = "game"
 
     def start(self):
         pygame.init()
@@ -18,42 +17,18 @@ class Main:
         pygame.display.set_caption(self.name)
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont('Comic Sans MS', 30)
-        self.levels = []
-        for i in blocksList:
-            for j in blocksList:
-                self.levels.append(Level(i, j))
-        self.level = self.levels[0]
-        self.numLevel = 1
-        self.maxLevel = len(self.levels)
+        self.level = LevelBehavior()
         self.update()
 
     def update(self):
         while self.play:
-            if self.status == GAME:
-                self.level.draw(self.screen)
-                self.status = self.level.update()
-            elif self.status == PAUSE:
-                self.status = self.level.pause(self.screen)
-            elif self.status == WIN and self.numLevel < self.maxLevel:
-                self.level = self.levels[self.numLevel]
-                self.numLevel += 1
-                self.status = GAME
-            elif self.status == GAMEOVER:
-                self.numLevel = 0
-                self.level.reset()
-                self.status = GAME
-            elif self.status == QUIT:
-                self.play = False
-
-            #RENDER
+            self.play = self.level.update(self.screen)
             pygame.display.flip()
             self.screen.fill(BLACK)
-
             self.clock.tick(self.fps)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.play = False
-
         self.finalise()
 
     def finalise(self):
