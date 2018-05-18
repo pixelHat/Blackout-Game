@@ -13,7 +13,7 @@ class LevelBehavior:
         self.status = GAME
 
     def nextLevel(self):
-        self.levelCurrent = self.levels[indexLevel]
+        self.levelCurrent = self.levels[self.indexLevel]
         self.indexLevel += 1
         self.status = GAME
 

@@ -1,4 +1,3 @@
-#import pygame
 from pygame import key, mouse
 from pygame.locals import *
 from Block import Block
@@ -10,8 +9,8 @@ from constants import *
 
 class Level():
     def __init__(self, blocks1, blocks2=None):
-        self.player = Player(SCREEN_TAM[0] // 2, SCREEN_TAM[1] - 50, 10, 100, 25, WHITE)
-        self.ball = Ball(SCREEN_TAM[0] // 2, SCREEN_TAM[1] - 60, 4, -4, 10, WHITE)
+        self.player = Player(SCREEN_TAM[0] // 8, SCREEN_TAM[1] - 50, 10, 100, 25, WHITE)
+        self.ball = Ball(SCREEN_TAM[0] // 6, SCREEN_TAM[1] - 60, 4, -4, 10, WHITE)
         self.objects = [self.player, self.ball]
         self.numBlocks = 0
         self.play = True
@@ -37,7 +36,7 @@ class Level():
         self.blocks = []
 
         width, height = 40, 40
-        posX, posY = 100, 120
+        posX, posY = 100, 0
         row, col = len(self.blocksPattern1[0]), len(self.blocksPattern1)
         for idxCol in range(col):
             for idxRow in range(row):
@@ -45,7 +44,7 @@ class Level():
                     block = Block(posX + idxRow*width, posY + idxCol*height, width, height, WHITE)
                     self.blocks.append(block)
 
-        posX, posY = 360, 120
+        posX, posY = 360, 0
         for idxCol in range(col):
             for idxRow in range(row):
                 if self.blocksPattern2[idxCol][idxRow] == 1:
@@ -65,8 +64,8 @@ class Level():
         """
         move the objects and call the method collision
         """
-        pressed = key.get_pressed() #pygame.key.get_pressed()
-        if pressed[K_p]:#pygame.K_p]:
+        pressed = key.get_pressed()
+        if pressed[K_p]:
             return PAUSE
         for obj in self.objects:
             obj.update()
@@ -81,10 +80,10 @@ class Level():
         """
         screen the pause for the level
         """
-        _mouse = mouse.get_pressed()#pygame.mouse.get_pressed()
+        _mouse = mouse.get_pressed()
         if _mouse[0]:
             for text in self.ButtonPause:
-                click = text.click(mouse.get_pos())#pygame.mouse.get_pos())
+                click = text.click(mouse.get_pos())
                 if click:
                     return text.getAction()
 
