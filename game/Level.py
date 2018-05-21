@@ -6,6 +6,7 @@ from Ball import Ball
 from Text import Text
 from Button import Button
 from constants import *
+from Pause import Pause
 
 class Level():
     def __init__(self, blocks1, blocks2=None):
@@ -15,12 +16,7 @@ class Level():
         self.numBlocks = 0
         self.play = True
 
-        #TEXT
-        _text2 = Text("Pause", 30, (100, 100), WHITE)
-        _text1 = Button("Continue", 30, (100, 100 + _text2.getSizeHeight()), WHITE, GAME)
-        _text3 = Button("Sair", 30, (100, 100 + _text1.getSizeHeight() + _text2.getSizeHeight()), WHITE, QUIT)
-        self.textPause = [_text2]
-        self.ButtonPause = [_text1, _text3]
+        self.pauseScreen = Pause(['Pause'], ['Continue', 'Quit'], [GAME, QUIT])
 
         self.blocksPattern1 = blocks1
         if blocks2 != None:
@@ -82,16 +78,11 @@ class Level():
         """
         _mouse = mouse.get_pressed()
         if _mouse[0]:
-            for text in self.ButtonPause:
-                click = text.click(mouse.get_pos())
-                if click:
-                    return text.getAction()
+            action = self.pauseScreen.buttonAction()
+            if action:
+                return action
 
-        for text in self.textPause:
-            text.draw(screen)
-        for text in self.ButtonPause:
-            text.draw(screen)
-
+        self.pauseScreen.draw(screen)
         return PAUSE
 
     def reset(self):
