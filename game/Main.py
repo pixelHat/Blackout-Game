@@ -22,9 +22,9 @@ class Main:
 
     def update(self):
         while self.play:
+            self.screen.fill(BLACK)
             self.play = self.level.update(self.screen)
             pygame.display.flip()
-            self.screen.fill(BLACK)
             self.clock.tick(self.fps)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
